@@ -300,11 +300,17 @@
                         </div>
                         <div class="col-md-6">
                             <div class="row">
-                                <div class="col-md-8 col-md-offset-5">
+                                <div class="col-md-4 ">&nbsp;</div>
+                                <div class="col-md-8 ">
+
                                     <div class="checkbox">
-                                        <label><input type="checkbox" value="" v-model="toc">I agree to the <a target="_blank" href="{{EXPLORE_PARKS_TERMS}}">terms and conditions</a></label>
+                                        <label><input type="checkbox" v-bind:value="toc"   name='toc' v-model="toc">I agree to the <a target="_blank" href="{{EXPLORE_PARKS_TERMS}}">terms and conditions</a></label>
                                     </div>
-                                    <button :disabled="!toc" type="submit" class="btn btn-primary btn-lg">Proceed to payment</button>
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" v-bind:value="outsideregion"  name='outsideregion' v-model="outsideregion">I understand that this booking does not provide any exemption from Western Australia’s <a href='https://www.wa.gov.au/organisation/department-of-the-premier-and-cabinet/covid-19-coronavirus-advice-travelling-and-around-western-australia'>travel restrictions</a> or <a href='https://www.wa.gov.au/organisation/department-of-the-premier-and-cabinet/covid-19-coronavirus-advice-travelling-and-around-western-australia'>gathering restrictions</a>, that those restrictions are subject to change, and that hygiene facilities at Parks and Wildlife Service campgrounds are minimal.</label>
+                                    </div>
+
+                                    <button :disabled="!toc||!outsideregion" type="submit" class="btn btn-primary btn-lg">Proceed to payment</button>
                                 </div>
                             </div>
                         </div>
@@ -346,7 +352,8 @@
             concessionWarning: false,
             vehicleCount: 1,
             toc: false,
-            booking_id: {{ booking.id }}
+            booking_id: {{ booking.id }},
+            outsideregion: false
         },
         filters:{
             formatMoney:function(n,c, d, t){
