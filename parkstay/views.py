@@ -188,7 +188,8 @@ class MakeBookingsView(TemplateView):
             'num_adult': booking.details.get('num_adult', 0) if booking else 0,
             'num_concession': booking.details.get('num_concession', 0) if booking else 0,
             'num_child': booking.details.get('num_child', 0) if booking else 0,
-            'num_infant': booking.details.get('num_infant', 0) if booking else 0
+            'num_infant': booking.details.get('num_infant', 0) if booking else 0,
+            'country': 'AU',
         }
         if request.user.is_anonymous():
             form = AnonymousMakeBookingsForm(form_context)
