@@ -91,9 +91,11 @@ def send_booking_confirmation(booking, request):
 
     att = BytesIO()
     pdf.create_confirmation(att, booking)
-    att.seek(0)
-
-    email_obj.send([email], from_address=default_campground_email, reply_to=campground_email, context=context, cc=cc, bcc=bcc, attachments=[('confirmation-PS{}.pdf'.format(booking.id), att.read(), 'application/pdf')])
+    att.seek(0) 
+    covidfile = None
+    with open(settings.BASE_DIR+"/parkstay/static/parkstay/pdf/parkstay-covid.pdf") as opened:
+         covidfile = opened.read()
+    email_obj.send([email], from_address=default_campground_email, reply_to=campground_email, context=context, cc=cc, bcc=bcc, attachments=[('confirmation-PS{}.pdf'.format(booking.id), att.read(), 'application/pdf'), ('covid-PS{}.pdf'.format(booking.id), covidfile, 'application/pdf')])
     booking.confirmation_sent = True
     booking.save()
 
