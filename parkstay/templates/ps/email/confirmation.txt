@@ -64,12 +64,6 @@ At the campground and park:
     -	Cover your mouth and nose when you cough or sneeze. Use a flexed elbow or a tissue - if you use a tissue, dispose of it immediately and appropriately.
 
 
-Before you go, check:
-
-- Your contact details and vehicle registration are correct [link to on screen details] 
-- The Bureau of Meteorology (http://www.bom.gov.au) for weather forecasts and warnings 
-- Emergency WA (https://www.emergency.wa.gov.au) for warnings and incidents 
-- The ABC (http://www.abc.net.au) radio frequency for the area you are visiting (ABC local radio broadcasts emergency information)
 
 Contact us about your booking
 {{campground_email}}

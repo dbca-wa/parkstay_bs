@@ -7,6 +7,7 @@ from ledger.emails.emails import EmailBase
 from django.template.loader import render_to_string, get_template
 from django.template import Context
 from django.core.mail import EmailMessage, EmailMultiAlternatives
+from parkstay import doctopdf
 
 from confy import env
 import hashlib
@@ -89,14 +90,16 @@ def send_booking_confirmation(booking, request):
         'additional_info': additional_info
     }
 
-    att = BytesIO()
-    pdf.create_confirmation(att, booking)
-    att.seek(0) 
+    #att = BytesIO()
+    #pdf.create_confirmation(att, booking)
+    pdf_buffer = doctopdf.create_confirmation(booking)
+    print (pdf_buffer)
+    #att.seek(0) 
     covidfile = None
     #with open(settings.BASE_DIR+"/parkstay/static/parkstay/pdf/parkstay-covid.pdf") as opened:
     #     covidfile = opened.read()
     #email_obj.send([email], from_address=default_campground_email, reply_to=campground_email, context=context, cc=cc, bcc=bcc, attachments=[('confirmation-PS{}.pdf'.format(booking.id), att.read(), 'application/pdf'), ('covid-PS{}.pdf'.format(booking.id), covidfile, 'application/pdf')])
-    email_obj.send([email], from_address=default_campground_email, reply_to=campground_email, context=context, cc=cc, bcc=bcc, attachments=[('confirmation-PS{}.pdf'.format(booking.id), att.read(), 'application/pdf'),])
+    email_obj.send([email], from_address=default_campground_email, reply_to=campground_email, context=context, cc=cc, bcc=bcc, attachments=[('confirmation-PS{}.pdf'.format(booking.id), pdf_buffer, 'application/pdf'),])
 
     booking.confirmation_sent = True
     booking.save()

@@ -101,6 +101,7 @@ from parkstay.serialisers import (CampsiteBookingSerialiser,
 from parkstay.helpers import is_officer
 from parkstay import reports
 from parkstay import pdf
+from parkstay import doctopdf
 from parkstay.perms import PaymentCallbackPermission
 from parkstay import emails
 
@@ -1307,7 +1308,7 @@ def get_confirmation(request, *args, **kwargs):
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="confirmation-PS{}.pdf"'.format(booking_id)
 
-    pdf.create_confirmation(response, booking)
+    response.content = doctopdf.create_confirmation(booking)
 
     return response
 
