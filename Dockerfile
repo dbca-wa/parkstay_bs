@@ -6,7 +6,7 @@ ENV PRODUCTION_EMAIL=True
 ENV SECRET_KEY="ThisisNotRealKey"
 RUN apt-get update
 RUN apt-get upgrade -y
-RUN apt-get install --no-install-recommends -y wget git libmagic-dev gcc binutils libproj-dev gdal-bin python python-setuptools python-dev python-pip tzdata
+RUN apt-get install --no-install-recommends -y wget git libmagic-dev gcc binutils libproj-dev gdal-bin python python-setuptools python-dev python-pip tzdata libreoffice
 RUN apt-get install --no-install-recommends -y libpq-dev
 RUN pip install --upgrade pip
 # Install Python libs from requirements.txt.
