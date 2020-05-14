@@ -40,29 +40,35 @@ About {{booking.campground.name}} and booking conditions {{availability}}
 
 {% if booking.campground.additional_info %}Additional confirmation information: {{booking.campground.additional_info}}{% endif %}
 
+DO NOT TRAVEL TO CAMPGROUNDS, PARKS OR OTHER RESERVES IF ANY PERSON IN YOUR TRAVELLING PARTY:
+•	may have COVID-19 symptoms
+•	may have had close contact with a person who has COVID-19
+•	is awaiting the results of a COVID-19 test
+•	has been advised to self-isolate by a health professional
 
-Before you go:
-*	DO NOT TRAVEL TO CAMPGROUNDS, PARKS OR OTHER RESERVES IF ANY PERSON IN YOUR TRAVELLING PARTY:
-    -	may have COVID-19 coronavirus symptoms
-    -	may have had close contact with a person who has COVID-19 coronavirus
-    -	is awaiting the results of a COVID-19 test 
-    -	has been advised to self-isolate by a health professional 
-*	ensure you are self-sufficient and able to maintain good personal hygiene by carrying your own handwashing equipment and materials: facilities at Parks and Wildlife Service campgrounds are basic
-*	Check:
-    -	WA government information and advice on COVID-19 including travel and gathering restrictions
-    -	Parks and Wildlife Service’s Explore Parks website and Park Alerts
-    -	The Bureau of Meteorology for weather forecasts and warnings Emergency WA for warnings and incidents
-    -	The ABC radio frequency for the area you are visiting (ABC local radio broadcasts emergency information)
-    -	Your contact details and vehicle registration are correct
+Other restrictions
 
-At the campground and park:
-    -	Practise appropriate social distancing including:
-    -	minimising all unnecessary contact with others
-    -	keeping 1.5 metres away from others
-    -	avoiding physical greetings such as handshakes, hug and kisses
-    -   The 4m² space per person rule must be observed at all times
-    -	Cover your mouth and nose when you cough or sneeze. Use a flexed elbow or a tissue - if you use a tissue, dispose of it immediately and appropriately.
+This booking does not provide any exemption from Western Australia’s regional travel restrictions or gathering restrictions. These restrictions are subject to change.
+•	The number for outdoor gatherings is a maximum of 20 people. 
+•	Non-contact recreational activities, such as private picnics in the park, fishing, boating, hiking and camping − all in compliance with travel restrictions and the 20-person rule is allowed.
+Stay informed
 
+•	Keep checking WA.gov.au for the most up-to-date information and advice.
+•	For up-to-date COVID-19 coronavirus health information including what to do if you suspect you have COVID-19 visit the Department of Health’s Healthy WA website or call 13COVID.
+•	Check the Parks and Wildlife Service’s Explore Parks website and Park Alerts
+•	Visit the Bureau of Meteorology for weather forecasts and warnings, Emergency WA for warnings and incidents.
+•	Listen to the ABC radio frequency for the area you are visiting (ABC local radio broadcasts emergency information).
+•	Check that your contact details and vehicle registration are correct.
+
+Stay safe 
+•	Practise social distancing by:
+o	 minimising all unnecessary contact with others;
+o	 staying 1.5 metres away from others; and
+o	 avoiding physical greetings such as handshakes, hugs and kisses.
+•	Ensure you are self-sufficient and able to maintain good personal hygiene, including washing hands regularly.
+•	Carry your own handwashing equipment and materials. Facilities at Parks and Wildlife Service campgrounds are basic.
+•	Cover your mouth and nose when you cough or sneeze. Use a flexed elbow or a tissue - if you use a tissue, dispose of it immediately and appropriately.
+•	The four square metres of space per person rule, with particular attention to shared facilities and areas such as ablutions/camp kitchens and other communal areas, must also be followed.
 
 
 Contact us about your booking
