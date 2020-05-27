@@ -233,7 +233,7 @@ class MakeBookingsView(TemplateView):
         booking.details['num_infant'] = form.cleaned_data.get('num_infant')
         booking.details['toc'] = request.POST.get('toc',False)
         booking.details['outsideregion'] = request.POST.get('outsideregion', False)
-
+        booking.details['trav_res'] = request.POST.get('trav_res', False)
 
         # update vehicle registrations from form
         VEHICLE_CHOICES = {'0': 'vehicle', '1': 'concession', '2': 'motorbike'}
