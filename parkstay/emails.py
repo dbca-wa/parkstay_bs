@@ -93,7 +93,7 @@ def send_booking_confirmation(booking, request):
     #att = BytesIO()
     #pdf.create_confirmation(att, booking)
     pdf_buffer = doctopdf.create_confirmation(booking)
-    print (pdf_buffer)
+    #print (pdf_buffer)
     #att.seek(0) 
     covidfile = None
     #with open(settings.BASE_DIR+"/parkstay/static/parkstay/pdf/parkstay-covid.pdf") as opened:
