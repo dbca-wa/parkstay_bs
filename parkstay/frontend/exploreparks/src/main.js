@@ -2,7 +2,8 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import './foundation-min.scss';
 import 'foundation-datepicker/css/foundation-datepicker.css';
-import 'openlayers/css/ol.css';
+//import 'openlayers/css/ol.css';
+import 'ol/ol.css';
 import 'awesomplete/awesomplete.css';
 
 import Vue from 'vue';

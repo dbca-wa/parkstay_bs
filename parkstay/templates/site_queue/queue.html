@@ -1,0 +1,14 @@
+{% extends 'site_queue/base_queue.html' %}
+
+
+{% block waitingtext %}
+We are currently experiencing extremely high demand for campsite bookings.
+You have currently been placed into a queue.  Please wait while we allocate you a spot.
+Once a spot has been allocated you will be able to browse the site for 20 minutes providing you
+dont close the site otherwise you will lose your spot.
+{% endblock %}
+
+{% block queuelogo %}
+   <img style='width: auto' src='/static/ps/img/pw-logo.png'>
+{% endblock %}
+
