@@ -459,7 +459,32 @@ div.awesomplete > input {
 <script>
 import Vue from 'vue'
 import Awesomplete from 'awesomplete';
-import ol from 'openlayers';
+import proj from 'ol/proj';
+import extent from 'ol/extent';
+import tilegrid from 'ol/tilegrid';
+import tilegridwmts from 'ol/tilegrid/wmts';
+import layer from 'ol/layer/layer';
+import layertitle from 'ol/layer/tile';
+import layervector from 'ol/layer/vector';
+import source from 'ol/source/source';
+import sourcevector from 'ol/source/vector';
+import sourcewmts from 'ol/source/wmts';
+import style from 'ol/style';
+import styleicon from 'ol/style/icon';
+import stylestyle from 'ol/style/style';
+import overlay from 'ol/overlay';
+import feature from 'ol/feature';
+import map from 'ol/map';
+import view from 'ol/view';
+import control from 'ol/control';
+import controlzoom from 'ol/control/zoom';
+import controlscaleline from 'ol/control/scaleline';
+import interaction from 'ol/interaction';
+import geolocation from 'ol/geolocation';
+import point from 'ol/geom/point';
+import formatgeojson from 'ol/format/geojson';
+import collection from 'ol/collection';
+
 import 'foundation-sites/dist/js/foundation.min';
 import 'foundation-datepicker/js/foundation-datepicker';
 import debounce from 'debounce';
@@ -861,13 +886,27 @@ export default {
             this.updateViewport(true);
         },
 
+        load_site_queue: function() {
+            console.log("load_site_queue");
+            var vm = this;
+            if (window.sitequeuemanager) {
+                  console.log("Site Queue Loaded");
+                  // jQuery is loaded
+            } else {
+                 var scriptTag = document.createElement('script');
+                 scriptTag.src = '/static/js/django_queue_manager/site-queue-manager.js';
+                 document.head.appendChild(scriptTag);
+                 setTimeout(function() { if (window.sitequeuemanager) { sitequeuemanager.init(); }  vm.load_site_queue(); }, 200);
+                 console.log("Deploying Waiting Queue");
+            }
+        },
     },
     mounted: function () {
         var vm = this;
         $(document).foundation();
-
+        var ol = {'proj': proj, 'extent': extent, 'tilegrid': {'WMTS': tilegridwmts}, 'layer': {'Tile': layertitle, 'Vector': layervector}, 'source': {'WMTS': sourcewmts, 'Vector': sourcevector}, 'style': {'Icon': styleicon, 'Style': stylestyle}, 'Overlay': overlay, 'Feature': feature, 'Map': map, 'View': view, 'control': {'Zoom': controlzoom,'ScaleLine': controlscaleline}, 'interaction': interaction, 'Geolocation': geolocation, 'geom': {'point': point}, 'format': {'GeoJSON': formatgeojson}, 'Collection': collection};
         console.log('Loading map...');
-
+        vm.load_site_queue();
         var nowTemp = new Date();
         var now = moment.utc({year: nowTemp.getFullYear(), month: nowTemp.getMonth(), day: nowTemp.getDate(), hour: 0, minute: 0, second: 0}).toDate();
 

@@ -1,0 +1,6 @@
+iiiii
+{% block waitingtext %}
+dsafdas
+
+{% endblock %}
+

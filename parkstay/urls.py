@@ -4,8 +4,8 @@ from django.conf.urls.static import static
 from rest_framework import routers
 from parkstay import views, api
 from parkstay.admin import admin
-
 from ledger.urls import urlpatterns as ledger_patterns
+from django_site_queue import urls as site_queue_urls
 
 # API patterns
 router = routers.DefaultRouter()
@@ -60,6 +60,7 @@ api_patterns = [
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'', include(api_patterns)),
+    url(r'', include(site_queue_urls)),
     url(r'^account/', views.ProfileView.as_view(), name='account'),
     url(r'^$', views.ParkstayRoutingView.as_view(), name='ps_home'),
     url(r'^campsites/(?P<ground_id>[0-9]+)/$', views.CampsiteBookingSelector.as_view(), name='campsite_booking_selector'),
