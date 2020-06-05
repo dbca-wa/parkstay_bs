@@ -90,4 +90,4 @@ DEV_STATIC_URL = env('DEV_STATIC_URL')
 DEPT_DOMAINS = env('DEPT_DOMAINS', ['dpaw.wa.gov.au', 'dbca.wa.gov.au'])
 #LEDGER_REFUND_EMAIL = env('LEDGER_REFUND_EMAIL', False )
 os.environ['LEDGER_REFUND_EMAIL'] = 'True'
-VERSION_NO = '3.01'
+VERSION_NO = '1.33'

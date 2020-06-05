@@ -10,7 +10,7 @@
     <script type="text/javascript">
         var parkstayUrl = window.location.protocol + '//' + window.location.host;
     </script>
-    <script src="{% static 'exploreparks/js/manifest.js' %}"></script>
-    <script src="{% static 'exploreparks/js/vendor.js' %}"></script>
-    <script src="{% static 'exploreparks/js/map.js' %}"></script>
+    <script src="{% static 'exploreparks/js/manifest.js' %}?ver={{ VERSION_NO  }}"></script>
+    <script src="{% static 'exploreparks/js/vendor.js' %}?ver={{ VERSION_NO  }}"></script>
+    <script src="{% static 'exploreparks/js/map.js' %}?ver={{ VERSION_NO  }}"></script>
 {% endblock %}

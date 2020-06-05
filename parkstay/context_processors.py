@@ -11,5 +11,6 @@ def parkstay_url(request):
         'EXPLORE_PARKS_TERMS': '{}/know/online-camp-site-booking-terms-and-conditions'.format(settings.EXPLORE_PARKS_URL),
         'PARKSTAY_EXTERNAL_URL': settings.PARKSTAY_EXTERNAL_URL,
         'DEV_STATIC': settings.DEV_STATIC,
-        'DEV_STATIC_URL': settings.DEV_STATIC_URL
+        'DEV_STATIC_URL': settings.DEV_STATIC_URL,
+        'VERSION_NO': settings.VERSION_NO
     }
