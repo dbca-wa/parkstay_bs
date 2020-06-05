@@ -894,7 +894,7 @@ export default {
                   // jQuery is loaded
             } else {
                  var scriptTag = document.createElement('script');
-                 scriptTag.src = '/static/js/django_queue_manager/site-queue-manager.js';
+                 scriptTag.src = vm.parkstayUrl+'/static/js/django_queue_manager/site-queue-manager.js';
                  document.head.appendChild(scriptTag);
                  setTimeout(function() { if (window.sitequeuemanager) { sitequeuemanager.init(); }  vm.load_site_queue(); }, 200);
                  console.log("Deploying Waiting Queue");
