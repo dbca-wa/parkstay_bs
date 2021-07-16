@@ -13,7 +13,7 @@ RUN apt-get install --no-install-recommends -y libpq-dev patch
 RUN apt-get install --no-install-recommends -y postgresql-client mtr
 RUN apt-get install --no-install-recommends -y sqlite3 vim postgresql-client ssh htop
 RUN ln -s /usr/bin/python3 /usr/bin/python 
-RUN ln -s /usr/bin/pip3 /usr/bin/pip
+#RUN ln -s /usr/bin/pip3 /usr/bin/pip
 RUN pip install --upgrade pip
 # Install Python libs from requirements.txt.
 FROM builder_base_parkstay as python_libs_parkstay
