@@ -1263,6 +1263,37 @@ def campground_map_view(request, *args, **kwargs):
      return HttpResponse(dumped_data, content_type='application/json')
 
 
+def campsite_bookings(request, *args, **kwargs):
+     today = date.today()
+     api_key = request.GET.get('api_key','')
+     today_updates_only = request.GET.get('today_updates_only','false')
+     if len(api_key) > 31:
+          if settings.CAMPSITE_BOOKING_API_KEY == api_key:
+              campsite_bookings = []
+              if today_updates_only == 'true':
+                  print (today)
+                  cs = CampsiteBooking.objects.filter(booking__is_canceled=False, booking__arrival__gte=today, booking__booking_type__in=[0,1,2], booking__updated__gte=today).order_by('-booking__arrival')
+              else:
+                  cs = CampsiteBooking.objects.filter(booking__is_canceled=False, booking__arrival__gte=today, booking__booking_type__in=[0,1,2]).order_by('-booking__arrival')
+              for c in cs:
+                   row = {}
+                   row['id'] = c.id
+                   row['booking_type'] = c.booking.booking_type
+                   row['date'] = c.date.strftime('%Y-%m-%d')
+                   row['campsite_id'] = c.campsite_id
+                   row['booking_id'] = c.booking.id
+                   row['is_canceled'] = c.booking.is_canceled
+                   campsite_bookings.append(row)
+
+              dumped_data = json.dumps(campsite_bookings)
+          else:
+              dumped_data= json.dumps({'error': 'Access Denied'})
+
+     else:
+         dumped_data= json.dumps({'error': 'Access Denied'})
+
+     return HttpResponse(dumped_data, content_type='application/json')
+
 @csrf_exempt
 @require_http_methods(['POST'])
 def create_booking(request, *args, **kwargs):

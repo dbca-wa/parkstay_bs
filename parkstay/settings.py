@@ -107,6 +107,7 @@ BOOKING_PROPERTY_CACHE_VERSION='v1.03'
 QUEUE_DOMAIN = env('QUEUE_DOMAIN','')
 QUEUE_URL = env('QUEUE_URL','')
 QUEUE_ACTIVE_HOSTS = env('QUEUE_ACTIVE_HOSTS','')
+CAMPSITE_BOOKING_API_KEY = env('CAMPSITE_BOOKING_API_KEY','')
 
 # Use git commit hash for purging cache in browser for deployment changes
 GIT_COMMIT_HASH = ''
