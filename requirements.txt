@@ -54,3 +54,4 @@ git+https://github.com/xzzy/django_site_queue.git#egg=django_site_queue
 dj-database-url==0.5.0
 phonenumbers==8.12.15
 django-treebeard==4.3.1
+psycopg2==2.8.6

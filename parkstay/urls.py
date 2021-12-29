@@ -54,6 +54,7 @@ api_patterns = [
     url(r'^api/reports/booking_refunds$', api.BookingRefundsReportView.as_view(), name='booking-refunds-report'),
     url(r'^api/reports/bookings$', api.BookingReportView.as_view(), name='bookings-report'),
     url(r'^api/reports/booking_settlements$', api.BookingSettlementReportView.as_view(), name='booking-settlements-report'),
+    url(r'^api/campsitebookings$', api.campsite_bookings, name='campsite_bookings'),
     url(r'^api/server-date$', api.GetServerDate.as_view(), name='get-server-date'),
     url(r'^api/', include(router.urls))
 ]
