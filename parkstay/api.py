@@ -1272,9 +1272,9 @@ def campsite_bookings(request, *args, **kwargs):
               campsite_bookings = []
               if today_updates_only == 'true':
                   print (today)
-                  cs = CampsiteBooking.objects.filter(booking__is_canceled=False, booking__arrival__gte=today, booking__booking_type__in=[0,1,2], booking__updated__gte=today).order_by('-booking__arrival')
+                  cs = CampsiteBooking.objects.filter(booking__arrival__gte=today, booking__booking_type__in=[0,1,2], booking__updated__gte=today).order_by('-booking__arrival')
               else:
-                  cs = CampsiteBooking.objects.filter(booking__is_canceled=False, booking__arrival__gte=today, booking__booking_type__in=[0,1,2]).order_by('-booking__arrival')
+                  cs = CampsiteBooking.objects.filter(booking__arrival__gte=today, booking__booking_type__in=[0,1,2]).order_by('-booking__arrival')
               for c in cs:
                    row = {}
                    row['id'] = c.id
