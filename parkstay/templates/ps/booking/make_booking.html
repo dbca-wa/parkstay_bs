@@ -309,7 +309,7 @@
                                         <label><input type="checkbox" v-bind:value="toc"   name='toc' v-model="toc">I agree to the <a target="_blank" href="https://exploreparks.dbca.wa.gov.au/know/online-camp-site-booking-terms-and-conditions">terms and conditions</a></label>
                                     </div>
 
-                                    <div class="checkbox">
+                                    <div class="checkbox" style='display: none'>
                                         <label><input type="checkbox" v-bind:value="outsideregion"  name='outsideregion' v-model="outsideregion">I understand qualified exemption from standard refund conditions may apply for WA's travel restrictions, and that those restrictions are subject to change.</label>
 
                                     </div>
@@ -319,7 +319,7 @@
                                     </div>
 
 
-                                    <button :disabled="!toc||!outsideregion||!trav_res" type="submit" class="btn btn-primary btn-lg">Proceed to payment</button>
+                                    <button :disabled="!toc||!trav_res" type="submit" class="btn btn-primary btn-lg">Proceed to payment</button>
                                 </div>
                             </div>
                         </div>
