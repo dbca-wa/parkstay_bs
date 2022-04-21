@@ -42,7 +42,8 @@ psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE us
 echo "Renaming parkstay v1 tables";
 for I in $(psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE user=$TEMPORARY_LEDGER_USERNAME password=$TEMPORARY_LEDGER_PASSWORD sslmode=require" -c "SELECT tablename FROM pg_tables where tablename like 'parkstay_%';" -t);
   do
-  NEW_TABLE_NAME=${I}_v1
+  #NEW_TABLE_NAME=${I}_v1
+  NEW_TABLE_NAME=$(echo "$I" | sed "s/parkstay_/parkstayv1_/")
   echo "ALTER TABLE $I  RENAME TO $NEW_TABLE_NAME; ";
   psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE user=$TEMPORARY_LEDGER_USERNAME password=$TEMPORARY_LEDGER_PASSWORD sslmode=require" -c "ALTER TABLE $I RENAME TO $NEW_TABLE_NAME;" -t
 done
@@ -55,7 +56,8 @@ psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE us
 echo "Renaming parkstay v2 tables";
 for I in $(psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE user=$TEMPORARY_LEDGER_USERNAME password=$TEMPORARY_LEDGER_PASSWORD sslmode=require" -c "SELECT tablename FROM pg_tables where tablename like 'parkstay_%';" -t);
   do
-  NEW_TABLE_NAME=${I}_v2
+  #NEW_TABLE_NAME=${I}_v2
+  NEW_TABLE_NAME=$(echo "$I" | sed "s/parkstay_/parkstayv2_/")
   echo "ALTER TABLE $I  RENAME TO $NEW_TABLE_NAME; ";
   psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE user=$TEMPORARY_LEDGER_USERNAME password=$TEMPORARY_LEDGER_PASSWORD sslmode=require" -c "ALTER TABLE $I RENAME TO $NEW_TABLE_NAME;" -t
 done
