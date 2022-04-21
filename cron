@@ -1,0 +1,1 @@
+01 7 * * 1-5 root eval $(grep -v '^#' /etc/.cronenv | xargs -d "\n" -I {} echo export \"{}\" ) && /reporting_database_rebuild.sh >> /dbdumps/reporting_database_rebuild.log 2>&1
