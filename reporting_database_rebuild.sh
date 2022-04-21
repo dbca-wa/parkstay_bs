@@ -20,7 +20,7 @@ echo "Dump Core Parkstay V1 Production Tables";
 pg_dump "host=$PRODUCTION_LEDGER_HOST port=5432 dbname=$PRODUCTION_LEDGER_DATABASE user=$PRODUCTION_LEDGER_USERNAME password=$PRODUCTION_LEDGER_PASSWORD sslmode=require" -t 'parkstay_*'  > /dbdumps/parkstayv1_core_prod.sql
 
 echo "Dump Core Parkstay V2 Production Tables";
-pg_dump "host=$PRODUCTION_PARKSTAYV2_HOST port=5432 dbname=$PRODUCTION_PARKSTAYV2_DATABASE user=$PRODUCTION_PARKSTAYV2_USERNAME password=$PRODUCTION_PARKSTAYV2_PASSWORD sslmode=require" -t 'parkstay_*'  > /dbdumps/parkstayv2_core_prod.sql
+pg_dump "host=$PRODUCTION_PARKSTAYV2_HOST port=5432 dbname=$PRODUCTION_PARKSTAYV2_DATABASE user=$PRODUCTION_PARKSTAYV2_USERNAME password=$PRODUCTION_PARKSTAYV2_PASSWORD sslmode=require" -t 'parkstay_*' > /dbdumps/parkstayv2_core_prod.sql
 
 
 
@@ -35,18 +35,32 @@ done
 echo "Importing Ledger Core prod into reporting database";
 psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE user=$TEMPORARY_LEDGER_USERNAME password=$TEMPORARY_LEDGER_PASSWORD sslmode=require" < /dbdumps/ledger_core_prod.sql
 
+# Parkstay V1
 echo "Importing Parkstay Core prod into reporting database";
 psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE user=$TEMPORARY_LEDGER_USERNAME password=$TEMPORARY_LEDGER_PASSWORD sslmode=require" < /dbdumps/parkstayv1_core_prod.sql
 
 echo "Renaming parkstay v1 tables";
 for I in $(psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE user=$TEMPORARY_LEDGER_USERNAME password=$TEMPORARY_LEDGER_PASSWORD sslmode=require" -c "SELECT tablename FROM pg_tables where tablename like 'parkstay_%';" -t);
   do
-  $TABLE_SUFFIX='_v1';
-  echo "ALTER TABLE $I  RENAME TO $I$TABLE_SUFFIX; ";
-  psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE user=$TEMPORARY_LEDGER_USERNAME password=$TEMPORARY_LEDGER_PASSWORD sslmode=require" -c "ALTER TABLE $I RENAME TO $I$TABLE_SUFFIX;" -t
+  NEW_TABLE_NAME=${I}_v1
+  echo "ALTER TABLE $I  RENAME TO $NEW_TABLE_NAME; ";
+  psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE user=$TEMPORARY_LEDGER_USERNAME password=$TEMPORARY_LEDGER_PASSWORD sslmode=require" -c "ALTER TABLE $I RENAME TO $NEW_TABLE_NAME;" -t
 done
 
-# TODO Parkstay V2
+
+# Parkstay V2
+echo "Importing Parkstay Core prod into reporting database";
+psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE user=$TEMPORARY_LEDGER_USERNAME password=$TEMPORARY_LEDGER_PASSWORD sslmode=require" < /dbdumps/parkstayv2_core_prod.sql
+
+echo "Renaming parkstay v2 tables";
+for I in $(psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE user=$TEMPORARY_LEDGER_USERNAME password=$TEMPORARY_LEDGER_PASSWORD sslmode=require" -c "SELECT tablename FROM pg_tables where tablename like 'parkstay_%';" -t);
+  do
+  NEW_TABLE_NAME=${I}_v2
+  echo "ALTER TABLE $I  RENAME TO $NEW_TABLE_NAME; ";
+  psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE user=$TEMPORARY_LEDGER_USERNAME password=$TEMPORARY_LEDGER_PASSWORD sslmode=require" -c "ALTER TABLE $I RENAME TO $NEW_TABLE_NAME;" -t
+done
+
+
 
 rm /dbdumps/ledger_core_prod.sql
 rm /dbdumps/parkstayv1_core_prod.sql
