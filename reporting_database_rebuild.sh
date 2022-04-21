@@ -25,7 +25,7 @@ pg_dump "host=$PRODUCTION_PARKSTAYV2_HOST port=5432 dbname=$PRODUCTION_PARKSTAYV
 
 
 # DROP All TABLES IN DAILY DB
-for I in $(psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE user=$TEMPORARY_LEDGER_USERNAME password=$TEMPORARY_LEDGER_PASSWORD sslmode=require" -c "SELECT tablename FROM pg_tables" -t);
+for I in $(psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE user=$TEMPORARY_LEDGER_USERNAME password=$TEMPORARY_LEDGER_PASSWORD sslmode=require" -c "SELECT tablename FROM pg_tables where tablename not like 'pg\_%' and tablename not like 'sql\_%';" -t);
   do
   echo " drop table $I CASCADE; ";
   psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE user=$TEMPORARY_LEDGER_USERNAME password=$TEMPORARY_LEDGER_PASSWORD sslmode=require" -c "drop table $I CASCADE;" -t
@@ -40,7 +40,7 @@ echo "Importing Parkstay Core prod into reporting database";
 psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE user=$TEMPORARY_LEDGER_USERNAME password=$TEMPORARY_LEDGER_PASSWORD sslmode=require" < /dbdumps/parkstayv1_core_prod.sql
 
 echo "Renaming parkstay v1 tables";
-for I in $(psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE user=$TEMPORARY_LEDGER_USERNAME password=$TEMPORARY_LEDGER_PASSWORD sslmode=require" -c "SELECT tablename FROM pg_tables where tablename like 'parkstay_%';" -t);
+for I in $(psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE user=$TEMPORARY_LEDGER_USERNAME password=$TEMPORARY_LEDGER_PASSWORD sslmode=require" -c "SELECT tablename FROM pg_tables where tablename like 'parkstay\_%';" -t);
   do
   #NEW_TABLE_NAME=${I}_v1
   NEW_TABLE_NAME=$(echo "$I" | sed "s/parkstay_/parkstayv1_/")
@@ -54,7 +54,7 @@ echo "Importing Parkstay Core prod into reporting database";
 psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE user=$TEMPORARY_LEDGER_USERNAME password=$TEMPORARY_LEDGER_PASSWORD sslmode=require" < /dbdumps/parkstayv2_core_prod.sql
 
 echo "Renaming parkstay v2 tables";
-for I in $(psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE user=$TEMPORARY_LEDGER_USERNAME password=$TEMPORARY_LEDGER_PASSWORD sslmode=require" -c "SELECT tablename FROM pg_tables where tablename like 'parkstay_%';" -t);
+for I in $(psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE user=$TEMPORARY_LEDGER_USERNAME password=$TEMPORARY_LEDGER_PASSWORD sslmode=require" -c "SELECT tablename FROM pg_tables where tablename like 'parkstay\_%';" -t);
   do
   #NEW_TABLE_NAME=${I}_v2
   NEW_TABLE_NAME=$(echo "$I" | sed "s/parkstay_/parkstayv2_/")
@@ -62,7 +62,12 @@ for I in $(psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_
   psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE user=$TEMPORARY_LEDGER_USERNAME password=$TEMPORARY_LEDGER_PASSWORD sslmode=require" -c "ALTER TABLE $I RENAME TO $NEW_TABLE_NAME;" -t
 done
 
-
+# drop all sequences
+for I in $(psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE user=$TEMPORARY_LEDGER_USERNAME password=$TEMPORARY_LEDGER_PASSWORD sslmode=require" -c "select relname from pg_class  where relkind = 'S' and relname like 'parkstay\_%' ;" -t);
+  do
+  echo "DROP SEQUENCE IF EXISTS $I CASCADE; ";
+  psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE user=$TEMPORARY_LEDGER_USERNAME password=$TEMPORARY_LEDGER_PASSWORD sslmode=require" -c "DROP SEQUENCE IF EXISTS $I CASCADE; " -t
+done
 
 rm /dbdumps/ledger_core_prod.sql
 rm /dbdumps/parkstayv1_core_prod.sql
