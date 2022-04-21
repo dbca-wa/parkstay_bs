@@ -12,7 +12,6 @@ if [ $TEMPORARY_LEDGER_DATABASE ==  'parkstayv2_prod' ]; then
 	exit;
 fi
 
-
 echo "Dump Core Ledger Production Tables";
 pg_dump "host=$PRODUCTION_LEDGER_HOST port=5432 dbname=$PRODUCTION_LEDGER_DATABASE user=$PRODUCTION_LEDGER_USERNAME password=$PRODUCTION_LEDGER_PASSWORD sslmode=require" -t 'accounts_emailuser' -t 'basket_basket' -t 'basket_line' -t 'order_order' -t 'order_line' -t 'address_country' -t 'payments_bpaytransaction' -t 'payments_bpointtransaction' -t 'payments_cashtransaction'  > /dbdumps/ledger_core_prod.sql
 
@@ -48,6 +47,12 @@ for I in $(psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_
   psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE user=$TEMPORARY_LEDGER_USERNAME password=$TEMPORARY_LEDGER_PASSWORD sslmode=require" -c "ALTER TABLE $I RENAME TO $NEW_TABLE_NAME;" -t
 done
 
+# drop all sequences
+for I in $(psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE user=$TEMPORARY_LEDGER_USERNAME password=$TEMPORARY_LEDGER_PASSWORD sslmode=require" -c "select relname from pg_class  where relkind = 'S' and relname like 'parkstay\_%' ;" -t);
+  do
+  echo "DROP SEQUENCE IF EXISTS $I CASCADE; ";
+  psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE user=$TEMPORARY_LEDGER_USERNAME password=$TEMPORARY_LEDGER_PASSWORD sslmode=require" -c "DROP SEQUENCE IF EXISTS $I CASCADE; " -t
+done
 
 # Parkstay V2
 echo "Importing Parkstay Core prod into reporting database";
@@ -67,6 +72,13 @@ for I in $(psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_
   do
   echo "DROP SEQUENCE IF EXISTS $I CASCADE; ";
   psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE user=$TEMPORARY_LEDGER_USERNAME password=$TEMPORARY_LEDGER_PASSWORD sslmode=require" -c "DROP SEQUENCE IF EXISTS $I CASCADE; " -t
+done
+
+# GRANT SELECT to parkstay_ro account
+for I in $(psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE user=$TEMPORARY_LEDGER_USERNAME password=$TEMPORARY_LEDGER_PASSWORD sslmode=require" -c "SELECT tablename FROM pg_tables where tablename not like 'pg\_%' and tablename not like 'sql\_%';" -t);
+  do
+  echo "GRANT SELECT ON $I TO parkstay_ro;";
+  psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE user=$TEMPORARY_LEDGER_USERNAME password=$TEMPORARY_LEDGER_PASSWORD sslmode=require" -c "GRANT SELECT ON $I TO parkstay_ro; " -t
 done
 
 rm /dbdumps/ledger_core_prod.sql
