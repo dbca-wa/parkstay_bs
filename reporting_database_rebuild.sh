@@ -13,13 +13,13 @@ if [ $TEMPORARY_LEDGER_DATABASE ==  'parkstayv2_prod' ]; then
 fi
 
 echo "Dump Core Ledger Production Tables";
-pg_dump "host=$PRODUCTION_LEDGER_HOST port=5432 dbname=$PRODUCTION_LEDGER_DATABASE user=$PRODUCTION_LEDGER_USERNAME password=$PRODUCTION_LEDGER_PASSWORD sslmode=require" -t 'accounts_emailuser' -t 'basket_basket' -t 'basket_line' -t 'order_order' -t 'order_line' -t 'address_country' -t 'payments_bpaytransaction' -t 'payments_bpointtransaction' -t 'payments_cashtransaction'  > /dbdumps/ledger_core_prod.sql
+pg_dump --column-inserts "host=$PRODUCTION_LEDGER_HOST port=5432 dbname=$PRODUCTION_LEDGER_DATABASE user=$PRODUCTION_LEDGER_USERNAME password=$PRODUCTION_LEDGER_PASSWORD sslmode=require" -t 'accounts_emailuser' -t 'basket_basket' -t 'basket_line' -t 'order_order' -t 'order_line' -t 'address_country' -t 'payments_bpaytransaction' -t 'payments_bpointtransaction' -t 'payments_cashtransaction'  > /dbdumps/ledger_core_prod.sql
 
 echo "Dump Core Parkstay V1 Production Tables";
-pg_dump "host=$PRODUCTION_LEDGER_HOST port=5432 dbname=$PRODUCTION_LEDGER_DATABASE user=$PRODUCTION_LEDGER_USERNAME password=$PRODUCTION_LEDGER_PASSWORD sslmode=require" -t 'parkstay_*'  > /dbdumps/parkstayv1_core_prod.sql
+pg_dump --column-inserts "host=$PRODUCTION_LEDGER_HOST port=5432 dbname=$PRODUCTION_LEDGER_DATABASE user=$PRODUCTION_LEDGER_USERNAME password=$PRODUCTION_LEDGER_PASSWORD sslmode=require" -t 'parkstay_*'  > /dbdumps/parkstayv1_core_prod.sql
 
 echo "Dump Core Parkstay V2 Production Tables";
-pg_dump "host=$PRODUCTION_PARKSTAYV2_HOST port=5432 dbname=$PRODUCTION_PARKSTAYV2_DATABASE user=$PRODUCTION_PARKSTAYV2_USERNAME password=$PRODUCTION_PARKSTAYV2_PASSWORD sslmode=require" -t 'parkstay_*' > /dbdumps/parkstayv2_core_prod.sql
+pg_dump --column-inserts "host=$PRODUCTION_PARKSTAYV2_HOST port=5432 dbname=$PRODUCTION_PARKSTAYV2_DATABASE user=$PRODUCTION_PARKSTAYV2_USERNAME password=$PRODUCTION_PARKSTAYV2_PASSWORD sslmode=require" -t 'parkstay_*' > /dbdumps/parkstayv2_core_prod.sql
 
 
 
