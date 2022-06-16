@@ -1267,12 +1267,16 @@ def campsite_bookings(request, *args, **kwargs):
      today = date.today()
      api_key = request.GET.get('api_key','')
      today_updates_only = request.GET.get('today_updates_only','false')
+     specified_date = request.GET.get('specified_date','false')
+     lookup_date = request.GET.get('lookup_date','')
      if len(api_key) > 31:
           if settings.CAMPSITE_BOOKING_API_KEY == api_key:
               campsite_bookings = []
               if today_updates_only == 'true':
                   print (today)
                   cs = CampsiteBooking.objects.filter(booking__arrival__gte=today, booking__booking_type__in=[0,1,2], booking__updated__gte=today).order_by('-booking__arrival')
+              elif specified_date == 'true':
+                  cs = CampsiteBooking.objects.filter(booking__booking_type__in=[0,1,2], booking__updated__gte=lookup_date+' 00:00:00', booking__updated__lte=lookup_date+' 23:59:59').order_by('-booking__arrival')
               else:
                   cs = CampsiteBooking.objects.filter(booking__arrival__gte=today, booking__booking_type__in=[0,1,2]).order_by('-booking__arrival')
               for c in cs:
