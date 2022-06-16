@@ -1,4 +1,4 @@
-git+git://github.com/dbca-wa/dbca-utils@1.0.0
+git+https://github.com/dbca-wa/dbca-utils@1.0.0
 git+https://github.com/dbca-wa/ledger#egg=ledger
 psycopg2-binary==2.8.5
 Django==1.11.29
