@@ -19,7 +19,7 @@ echo "Dump Core Parkstay V1 Production Tables";
 PGPASSWORD="$PRODUCTION_LEDGER_PASSWORD" pg_dump -t 'parkstay_*' --file /dbdumps/parkstayv1_core_prod.sql --format=custom --host $PRODUCTION_LEDGER_HOST --dbname $PRODUCTION_LEDGER_DATABASE --username $PRODUCTION_LEDGER_USERNAME
 
 echo "Dump Core Parkstay V2 Production Tables";
-PGPASSWORD="$PRODUCTION_PARKSTAYV2_PASSWORD" pg_dump -t 'parkstay_*' --file /dbdumps/parkstayv2_core_prod.sql --format=custom --host $PRODUCTION_PARKSTAYV2_HOST --dbname $PRODUCTION_PARKSTAYV2_DATABASE --username $PRODUCTION_PARKSTAYV2_USERNAME
+PGPASSWORD="$PRODUCTION_PARKSTAYV2_PASSWORD" pg_dump -t 'parkstay_*' -t 'ledger_api_client_*' --file /dbdumps/parkstayv2_core_prod.sql --format=custom --host $PRODUCTION_PARKSTAYV2_HOST --dbname $PRODUCTION_PARKSTAYV2_DATABASE --username $PRODUCTION_PARKSTAYV2_USERNAME
 
 # DROP All TABLES IN DAILY DB
 for I in $(psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE user=$TEMPORARY_LEDGER_USERNAME password=$TEMPORARY_LEDGER_PASSWORD sslmode=require" -c "SELECT tablename FROM pg_tables where tablename not like 'pg\_%' and tablename not like 'sql\_%';" -t);
