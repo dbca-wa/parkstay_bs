@@ -1,9 +1,8 @@
 [![Build
 status](https://travis-ci.org/dbca-wa/ledger.svg?branch=master)](https://travis-ci.org/dbca-wa/ledger/builds) [![Coverage Status](https://coveralls.io/repos/github/dbca-wa/ledger/badge.svg?branch=master)](https://coveralls.io/github/dbca-wa/ledger?branch=master)
-# Ledger
+# Parkstay V1 Legacy System
 
-This project is the hub of the Department's online commerce activities.
-It provides authentication, address and online payments functionality.
+This is the old parkstay version 1.   A new version of parkstay V2 is available here.  https://github.com/dbca-wa/parkstay_bs_v2
 
 # Requirements
 
