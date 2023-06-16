@@ -74,7 +74,7 @@ OSCAR_BASKET_COOKIE_OPEN = 'parkstay_basket'
 CRON_CLASSES = [
     #'parkstay.cron.SendBookingsConfirmationCronJob',
     'parkstay.cron.UnpaidBookingsReportCronJob',
-    'parkstay.cron.OracleIntegrationCronJob',
+    #'parkstay.cron.OracleIntegrationCronJob', # Disabled on the 16/06/2023 by PVS
 ]
 
 # Additional logging for parkstay
