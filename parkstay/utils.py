@@ -19,7 +19,8 @@ from parkstay.serialisers import BookingRegoSerializer, ParkEntryRateSerializer,
 from parkstay.emails import send_booking_invoice, send_booking_confirmation
 from parkstay.exceptions import BindBookingException
 from ledger.basket.models import Basket
-from oscar.apps.order.models import Order
+#from oscar.apps.order.models import Order
+from ledger.order.models import Order
 
 logger = logging.getLogger('booking_checkout')
 
