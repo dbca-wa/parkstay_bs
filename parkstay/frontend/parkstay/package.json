@@ -35,7 +35,7 @@
     "vue-resource": "^1.0.3",
     "vue-router": "^2.0.1",
     "vuex": "^2.2.1",
-    "webpack-dev-server": "^3.1.6",
+    "webpack-dev-server": "^4.8.0",
     "cheerio": "^0.22.0"
   },
   "devDependencies": {
