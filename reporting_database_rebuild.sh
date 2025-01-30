@@ -12,14 +12,21 @@ if [ $TEMPORARY_LEDGER_DATABASE ==  'parkstayv2_prod' ]; then
         exit;
 fi
 
+
+
+
 echo "Dump Core Ledger Production Tables";
 PGPASSWORD="$PRODUCTION_LEDGER_PASSWORD" pg_dump -t 'accounts_*' -t 'basket_basket' -t 'basket_line' -t 'order_order' -t 'order_line' -t 'address_country' -t 'address_useraddress' -t 'payments_bpaytransaction' -t 'payments_bpointtransaction' -t 'payments_cashtransaction' -t 'payments_invoice' -t 'payments_linkedinvoice' -t 'payments_oracleinterface' --file /dbdumps/ledger_core_prod.sql --format=custom --host $PRODUCTION_LEDGER_HOST --dbname $PRODUCTION_LEDGER_DATABASE --username $PRODUCTION_LEDGER_USERNAME
+
 
 echo "Dump Core Parkstay V1 Production Tables";
 PGPASSWORD="$PRODUCTION_LEDGER_PASSWORD" pg_dump -t 'parkstay_*' --file /dbdumps/parkstayv1_core_prod.sql --format=custom --host $PRODUCTION_LEDGER_HOST --dbname $PRODUCTION_LEDGER_DATABASE --username $PRODUCTION_LEDGER_USERNAME
 
 echo "Dump Core Parkstay V2 Production Tables";
 PGPASSWORD="$PRODUCTION_PARKSTAYV2_PASSWORD" pg_dump -t 'parkstay_*' -t 'ledger_api_client_*' --file /dbdumps/parkstayv2_core_prod.sql --format=custom --host $PRODUCTION_PARKSTAYV2_HOST --dbname $PRODUCTION_PARKSTAYV2_DATABASE --username $PRODUCTION_PARKSTAYV2_USERNAME
+
+echo "Removing Locks";
+psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE user=$TEMPORARY_LEDGER_USERNAME password=$TEMPORARY_LEDGER_PASSWORD sslmode=require" -c "select pg_terminate_backend(pid) from pg_stat_activity where usename= 'parkstay_rw' and datname = 'parkstay_bs_reporting_prod' and cardinality(pg_blocking_pids(pid)) > 0;
 
 # DELETE All DATA IN PARKSTAY REPORTING
 for I in $(psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE user=$TEMPORARY_LEDGER_USERNAME password=$TEMPORARY_LEDGER_PASSWORD sslmode=require" -c "SELECT tablename FROM pg_tables where tablename not like 'pg\_%' and tablename not like 'sql\_%';" -t);
