@@ -26,8 +26,8 @@ echo "Dump Core Parkstay V2 Production Tables";
 PGPASSWORD="$PRODUCTION_PARKSTAYV2_PASSWORD" pg_dump -t 'parkstay_*' -t 'ledger_api_client_*' --file /dbdumps/parkstayv2_core_prod.sql --format=custom --host $PRODUCTION_PARKSTAYV2_HOST --dbname $PRODUCTION_PARKSTAYV2_DATABASE --username $PRODUCTION_PARKSTAYV2_USERNAME
 
 echo "Removing Locks";
-psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE user=$TEMPORARY_LEDGER_USERNAME password=$TEMPORARY_LEDGER_PASSWORD sslmode=require" -c "select pg_terminate_backend(pid) from pg_stat_activity where usename= 'parkstay_rw' and datname = 'parkstay_bs_reporting_prod' and cardinality(pg_blocking_pids(pid)) > 0;
-psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE user=$TEMPORARY_LEDGER_USERNAME_RO password=$TEMPORARY_LEDGER_PASSWORD_RO sslmode=require" -c "select pg_terminate_backend(pid) from pg_stat_activity where usename= 'parkstay_ro' and datname = 'parkstay_bs_reporting_prod' and cardinality(pg_blocking_pids(pid)) > 0;
+psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE user=$TEMPORARY_LEDGER_USERNAME password=$TEMPORARY_LEDGER_PASSWORD sslmode=require" -c "select pg_terminate_backend(pid) from pg_stat_activity where usename= 'parkstay_rw' and datname = 'parkstay_bs_reporting_prod' and cardinality(pg_blocking_pids(pid)) > 0;"
+psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE user=$TEMPORARY_LEDGER_USERNAME_RO password=$TEMPORARY_LEDGER_PASSWORD_RO sslmode=require" -c "select pg_terminate_backend(pid) from pg_stat_activity where usename= 'parkstay_ro' and datname = 'parkstay_bs_reporting_prod' and cardinality(pg_blocking_pids(pid)) > 0;"
 
 # DELETE All DATA IN PARKSTAY REPORTING
 for I in $(psql "host=$TEMPORARY_LEDGER_HOST port=5432 dbname=$TEMPORARY_LEDGER_DATABASE user=$TEMPORARY_LEDGER_USERNAME password=$TEMPORARY_LEDGER_PASSWORD sslmode=require" -c "SELECT tablename FROM pg_tables where tablename not like 'pg\_%' and tablename not like 'sql\_%';" -t);
