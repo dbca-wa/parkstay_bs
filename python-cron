@@ -1,0 +1,1 @@
+01 7 * * * /reporting_database_rebuild.sh >> /dbdumps/reporting_database_rebuild.log 2>&1
