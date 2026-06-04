@@ -1,6 +1,6 @@
 # Prepare the base environment.
 FROM  ghcr.io/dbca-wa/parkstay_bs:parkstay_bs_reporting_latest as builder_base_parkstay_reporting_dev
-
+USER root
 RUN apt-get update
 RUN apt-get install --no-install-recommends -y patch
 RUN apt-get install --no-install-recommends -y libpq-dev git ssh sudo
