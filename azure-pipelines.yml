@@ -31,8 +31,8 @@ stages:
         tags: | 
               latest
               $(tagDate)
-        containerRegistry: DockerHub
-        repository: dbcawa/parkstay_bs_reporting
+        containerRegistry: DockerGitHub
+        repository: ghcr.io/dbca-wa/parkstay_bs
     - task: Docker@2
       displayName: Dev Build image and Push
       inputs:
@@ -41,7 +41,6 @@ stages:
         tags: | 
               parkstay_bs_reporting_latest
               parkstay_bs_reporting_$(tagDate)              
-        containerRegistry: DockerHub
-        repository: dbcawa/docker_app_dev
-
+        containerRegistry: DockerGitHub
+        repository: ghcr.io/dbca-wa/docker_app_dev
 
