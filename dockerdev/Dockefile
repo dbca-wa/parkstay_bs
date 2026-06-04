@@ -1,5 +1,5 @@
 # Prepare the base environment.
-FROM dbcawa/parkstay_v2:latest as builder_base_parkstay_reporting_dev
+FROM  ghcr.io/dbca-wa/parkstay_bs:parkstay_bs_reporting_latest as builder_base_parkstay_reporting_dev
 
 RUN apt-get update
 RUN apt-get install --no-install-recommends -y patch
