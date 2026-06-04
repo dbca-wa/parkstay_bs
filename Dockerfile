@@ -1,3 +1,5 @@
+# Prepare the base environment.
+FROM ubuntu:26.04 as builder_base_container
 MAINTAINER asi@dbca.wa.gov.au
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=Australia/Perth
@@ -50,8 +52,7 @@ RUN chmod 755 /startup.sh
 EXPOSE 80
 HEALTHCHECK CMD service cron status | grep "cron is running" || exit 1
 CMD ["/startup.sh"]
-                                                      
+                                                     
 
-COPY --chown=oim:oim startup.sh /
-COPY --chown=oim:oim reporting_database_rebuild.sh /
-COPY --chown=oim:oim open_reporting_db /
+
+
