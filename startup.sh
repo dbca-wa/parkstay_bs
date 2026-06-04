@@ -5,7 +5,7 @@ env > /etc/.cronenv
 sed -i 's/\"/\\"/g' /etc/.cronenv
 
 echo "Starting Cron"
-service cron start &
+python3 /bin/scheduler.py /app/python-cron /app/logs/python-cron.log &
 status=$?
 if [ $status -ne 0 ]; then
   echo "Failed to start cron: $status"
