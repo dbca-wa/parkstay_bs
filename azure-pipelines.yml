@@ -29,8 +29,8 @@ stages:
         command: buildAndPush
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: | 
-              latest
-              $(tagDate)
+              parkstay_bs_reporting_latest
+              parkstay_bs_reporting_$(tagDate)
         containerRegistry: DockerGitHub
         repository: ghcr.io/dbca-wa/parkstay_bs
     - task: Docker@2
